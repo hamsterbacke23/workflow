@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #f2f2f2;
+}
+
+.srd-diagram {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  cursor: move;
+  overflow: hidden;
+  max-height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  max-width: 100vw;
+
+  &__selector {
+    position: absolute;
+    background-color: rgba(255, 216, 0, 0.2);
+    border: solid 2px rgb(255, 216, 0);
+  }
+}
+
+.srd-link-layer {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform-origin: 0 0;
+  overflow: visible !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.srd-node-layer {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  transform-origin: 0 0;
+  width: 100%;
+  height: 100%;
+}
+
+.srd-node {
+  position: absolute;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  user-select: none;
+  cursor: move;
+  pointer-events: all;
+  > * {
+    border: 2px solid transparent;
+  }
+  &--selected {
+    > * {
+      border-color: #ffd800 !important;
+    }
+  }
+}
+
+.srd-default-link {
+  @keyframes dash {
+    from {
+      stroke-dashoffset: 24;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  path {
+    fill: none;
+    pointer-events: all;
+    stroke: rgb(135, 135, 135);
+  }
+
+  &--path-selected {
+    stroke: rgb(255, 216, 0) !important;
+    stroke-dasharray: 10, 2;
+    animation: dash 1s linear infinite;
+  }
+
+  &__label {
+    pointer-events: none;
+
+    > div {
+      display: inline-block;
+      position: absolute;
+    }
+  }
+
+  &__point {
+    fill: rgba(white, 0.5);
+  }
+
+  &--point-selected {
+    fill: rgb(255, 216, 0);
+  }
+}
+
+.srd-port {
+  width: 15px;
+  height: 15px;
+  background: rgba(white, 0.6);
+
+  &:hover,
+  &.selected {
+    background: #ffd800;
+  }
+}
