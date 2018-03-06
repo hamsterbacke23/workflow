@@ -8,6 +8,7 @@ import {
 import forEach from 'lodash/forEach';
 import * as SRD from 'storm-react-diagrams';
 import './task.css';
+import { hubot, tools, server, mirror, tasklist, dashboard } from 'octicons';
 
 export interface TaskNodeWidgetProps {
   node: TaskNodeModel;
@@ -25,9 +26,15 @@ export class TaskNodeWidget extends React.Component<
     node: null
   };
 
+  randomIconPath: string;
+
   constructor(props: TaskNodeWidgetProps) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.randomIconPath = this.setRandomIconPath();
   }
 
   cloneSelected = () => {
@@ -57,6 +64,24 @@ export class TaskNodeWidget extends React.Component<
     this.props.engine.repaintCanvas();
   };
 
+  setRandomIconPath() {
+    const rand = Math.floor(Math.random() * Math.floor(5));
+    switch (true) {
+      case rand === 0:
+        return server.path;
+      case rand === 1:
+        return mirror.path;
+      case rand === 2:
+        return hubot.path;
+      case rand === 3:
+        return tools.path;
+      case rand === 4:
+        return tasklist.path;
+      case rand === 5:
+        return tasklist.path;
+    }
+  }
+
   render() {
     return (
       <div className={'task-node'}>
@@ -64,7 +89,15 @@ export class TaskNodeWidget extends React.Component<
         <PortWidget name="top" node={this.props.node} />
         <PortWidget name="right" node={this.props.node} />
         <PortWidget name="bottom" node={this.props.node} />
-        <div className="name">Kuckuck {this.props.node.index}</div>
+        <div className="title">
+          Task <span className="level">(Level {this.props.node.index})</span>
+        </div>
+        <svg
+          viewBox="0 0 16 16"
+          dangerouslySetInnerHTML={{
+            __html: this.randomIconPath
+          }}
+        />
         <div
           className="addButton"
           onClick={this.cloneSelected}
