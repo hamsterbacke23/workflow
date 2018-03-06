@@ -13,26 +13,58 @@ import { TaskNodeFactory } from '../../nodes/Task/TaskNodeFactory';
 import { TaskPortModel } from '../../nodes/Task/TaskPortModel';
 import { SimplePortFactory } from 'storm-react-diagrams';
 
-export default () => {
-  var engine = new DiagramEngine();
-  engine.installDefaultFactories();
-  engine.registerPortFactory(
-    new SimplePortFactory('task', config => new TaskPortModel())
-  );
+export interface DiagramProps {
+  setEngine: (engine: any) => void;
+}
 
-  engine.registerNodeFactory(new TaskNodeFactory());
+export interface DiagramState {
+  engine: DiagramEngine;
+}
 
-  var model = new DiagramModel();
-  var node3 = new TaskNodeModel();
-  node3.setPosition(250, 108);
+export default class Diagram extends React.Component<
+  DiagramProps,
+  DiagramState
+> {
+  public static defaultProps: DiagramProps = {
+    setEngine: null
+  };
 
-  model.addAll(node3);
-  // var str = JSON.stringify(model.serializeDiagram());
-  // window.console.log(str);
+  state = {
+    engine: null
+  };
 
-  engine.repaintCanvas();
-  window.console.log('repaint');
-  engine.setDiagramModel(model);
+  componentDidMount() {
+    const engine = new DiagramEngine();
+    engine.installDefaultFactories();
 
-  return <DiagramWidget className="srd-demo-canvas" diagramEngine={engine} />;
-};
+    engine.registerPortFactory(
+      new SimplePortFactory('task', config => new TaskPortModel())
+    );
+
+    engine.registerNodeFactory(new TaskNodeFactory());
+
+    const model = new DiagramModel();
+    const firstNode = new TaskNodeModel();
+    firstNode.setPosition(250, 100);
+
+    model.addAll(firstNode);
+    engine.setDiagramModel(model);
+
+    this.setState({ engine });
+
+    if (this.props.setEngine) {
+      this.props.setEngine(engine);
+    }
+  }
+
+  render() {
+    return (
+      this.state.engine && (
+        <DiagramWidget
+          className="srd-demo-canvas"
+          diagramEngine={this.state.engine}
+        />
+      )
+    );
+  }
+}

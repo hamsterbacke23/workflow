@@ -8,7 +8,7 @@ import {
 import forEach from 'lodash/forEach';
 import * as SRD from 'storm-react-diagrams';
 import './task.css';
-import { hubot, tools, server, mirror, tasklist, dashboard } from 'octicons';
+import * as icons from 'octicons';
 
 export interface TaskNodeWidgetProps {
   node: TaskNodeModel;
@@ -26,24 +26,19 @@ export class TaskNodeWidget extends React.Component<
     node: null
   };
 
-  randomIconPath: string;
-
   constructor(props: TaskNodeWidgetProps) {
     super(props);
     this.state = {};
-  }
-
-  componentDidMount() {
-    this.randomIconPath = this.setRandomIconPath();
   }
 
   cloneSelected = () => {
     const offset = { x: 200, y: 0 };
     const model = this.props.engine.getDiagramModel();
     const newItem = this.props.node.clone();
-    newItem.index = this.props.node.index + 1;
+    newItem.index = this.props.node.level + 1;
+    newItem.setIcon();
 
-    if (newItem instanceof SRD.NodeModel) {
+    if (newItem instanceof TaskNodeModel) {
       newItem.setPosition(newItem.x + offset.x, newItem.y + offset.y);
       newItem.selected = false;
       model.addNode(newItem);
@@ -64,24 +59,6 @@ export class TaskNodeWidget extends React.Component<
     this.props.engine.repaintCanvas();
   };
 
-  setRandomIconPath() {
-    const rand = Math.floor(Math.random() * Math.floor(5));
-    switch (true) {
-      case rand === 0:
-        return server.path;
-      case rand === 1:
-        return mirror.path;
-      case rand === 2:
-        return hubot.path;
-      case rand === 3:
-        return tools.path;
-      case rand === 4:
-        return tasklist.path;
-      case rand === 5:
-        return tasklist.path;
-    }
-  }
-
   render() {
     return (
       <div className={'task-node'}>
@@ -90,12 +67,12 @@ export class TaskNodeWidget extends React.Component<
         <PortWidget name="right" node={this.props.node} />
         <PortWidget name="bottom" node={this.props.node} />
         <div className="title">
-          Task <span className="level">(Level {this.props.node.index})</span>
+          Task <span className="level">(Level {this.props.node.level})</span>
         </div>
         <svg
           viewBox="0 0 16 16"
           dangerouslySetInnerHTML={{
-            __html: this.randomIconPath
+            __html: icons[this.props.node.icon].path
           }}
         />
         <div
