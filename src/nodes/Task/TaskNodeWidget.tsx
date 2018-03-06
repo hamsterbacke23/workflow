@@ -34,8 +34,8 @@ export class TaskNodeWidget extends React.Component<
   cloneSelected = () => {
     const offset = { x: 200, y: 0 };
     const model = this.props.engine.getDiagramModel();
-    const newItem = this.props.node.clone();
-    newItem.index = this.props.node.level + 1;
+    const newItem = this.props.node.clone({});
+    newItem.level = this.props.node.level + 1;
     newItem.setIcon();
 
     if (newItem instanceof TaskNodeModel) {
