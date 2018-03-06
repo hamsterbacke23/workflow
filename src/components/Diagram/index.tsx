@@ -29,10 +29,9 @@ export default () => {
   model.addAll(node3);
   // var str = JSON.stringify(model.serializeDiagram());
   // window.console.log(str);
-  window.setTimeout(() => {
-    engine.repaintCanvas();
-    window.console.log('repaint');
-  }, 4000);
+
+  engine.repaintCanvas();
+  window.console.log('repaint');
   engine.setDiagramModel(model);
 
   return <DiagramWidget className="srd-demo-canvas" diagramEngine={engine} />;
