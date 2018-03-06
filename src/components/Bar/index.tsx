@@ -45,12 +45,19 @@ export class Bar extends React.Component<BarProps, BarState> {
   render() {
     return (
       <div className="bar">
-        <button onClick={this.toggleImportExport}>Import / Export</button>
+        <button
+          className="importexport-toggle"
+          onClick={this.toggleImportExport}
+        >
+          {this.state.showImportExport && 'Close'} Import / Export
+        </button>
         {this.state.showImportExport && (
-          <div className="import-export">
+          <div className="importexport-panel">
             <textarea value={this.state.text} onChange={this.onTextChange} />
-            <button onClick={this.export}>Export</button>
-            <button onClick={this.import}>Import</button>
+            <div className="actions">
+              <button onClick={this.export}>Export</button>
+              <button onClick={this.import}>Import</button>
+            </div>
           </div>
         )}
       </div>
