@@ -40,6 +40,7 @@ export class Bar extends React.Component<BarProps, BarState> {
     newModel.deSerializeDiagram(JSON.parse(this.state.text), this.props.engine);
     this.props.engine.setDiagramModel(newModel);
     this.props.engine.repaintCanvas();
+    this.setState({ showImportExport: false });
   };
 
   render() {
