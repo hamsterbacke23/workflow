@@ -7,7 +7,13 @@ Testing out storm-react-diagrams with create-react-app.
 After cloning the repo, just start it with
 
 ```
+yarn install
 yarn start
+```
+or
+```
+npm install
+npm run start
 ```
 
 See https://github.com/facebook/create-react-app for more details
