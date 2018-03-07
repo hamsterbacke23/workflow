@@ -41,6 +41,7 @@ export class Bar extends React.Component<BarProps, BarState> {
     this.props.engine.setDiagramModel(newModel);
     this.props.engine.repaintCanvas();
     this.setState({ showImportExport: false });
+    this.setState({ text: '' });
   };
 
   render() {
