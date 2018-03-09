@@ -75,13 +75,13 @@ export class TaskNodeWidget extends React.Component<
             __html: icons[this.props.node.icon].path
           }}
         />
-        <div
+        <a
           className="addButton"
           onClick={this.cloneSelected}
           aria-label="Hinzufügen"
         >
           <span role="presentation">+</span>
-        </div>
+        </a>
       </div>
     );
   }
