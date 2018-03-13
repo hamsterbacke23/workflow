@@ -8,13 +8,17 @@ class App extends React.Component {
     engine: null
   };
 
+  /**
+   * Pass along the diagram engine to other components
+   * by calling this function in child components
+   */
   setEngine = engine => {
     this.setState({ engine });
   };
 
   render() {
     return (
-      <div className="app">
+      <div className="app" role="main">
         <Bar engine={this.state.engine} />
         <Diagram setEngine={this.setEngine} />
         <div className="instructions">

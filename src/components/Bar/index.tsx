@@ -18,6 +18,9 @@ export class Bar extends React.Component<BarProps, BarState> {
     text: ''
   };
 
+  /**
+   * Show and hide the import/export panel
+   */
   toggleImportExport = () => {
     this.setState({ showImportExport: !this.state.showImportExport });
   };
@@ -26,6 +29,9 @@ export class Bar extends React.Component<BarProps, BarState> {
     this.setState({ text: event.target.value });
   };
 
+  /**
+   * Serialize diagram to export it
+   */
   export = () => {
     const model = this.props.engine.getDiagramModel();
 
@@ -35,13 +41,18 @@ export class Bar extends React.Component<BarProps, BarState> {
     }
   };
 
+  /**
+   * Import a serialized diagram (json)
+   */
   import = () => {
     const newModel = new DiagramModel();
     newModel.deSerializeDiagram(JSON.parse(this.state.text), this.props.engine);
     this.props.engine.setDiagramModel(newModel);
     this.props.engine.repaintCanvas();
-    this.setState({ showImportExport: false });
-    this.setState({ text: '' });
+    this.setState({
+      showImportExport: false,
+      text: ''
+    });
   };
 
   render() {

@@ -12,6 +12,7 @@ import { TaskNodeModel } from '../../nodes/Task/TaskNodeModel';
 import { TaskNodeFactory } from '../../nodes/Task/TaskNodeFactory';
 import { TaskPortModel } from '../../nodes/Task/TaskPortModel';
 import { SimplePortFactory } from 'storm-react-diagrams';
+import './style.css';
 
 export interface DiagramProps {
   setEngine: (engine: any) => void;

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Workflow",
+  "name": "Demo of a workflow with auto generated nodes",
   "icons": [
     {
       "src": "favicon.ico",
